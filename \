@@ -1,12 +1,14 @@
 import re
+def repeated_links(
+
+
 
 def link_return(hlinks):
     links = []
     for i,link in enumerate(hlinks):
         #adiciona links encontrados no atributo href
         links.append(link.attrs['href'])
-        if re.match("http",link[i]) == False:
-            #remove hrefs que nao sao links
+        if !re.match("http",link[i]):
             link.pop()
         if i > 0 and links[-1] == links[-2]:
             #remove links repetidos
