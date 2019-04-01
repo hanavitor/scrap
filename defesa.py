@@ -8,30 +8,30 @@ import visitedlinks as v
 
 session = rh.HTMLSession()
 vl = v.VistedLinks()
-flag = True
 links = []
 timeout = 2
 retry = 0
-i = 1
+i = 0
+k = 1
 
 open(sys.argv[1],'w')
 
-while i<=203:
-    print("Page "+str(i)+" out of 203")
-    r = session.get('http://ctav.gov.br/category/noticias/page/'+str(i))
+while i<=3500:
+    print("Page "+str(k)+" out of 505")
+    r = session.get('http://defesa.gov.br/noticias?start='+str(i))
     print(r.url)
-    rl = r.html.find('h2.entry-title')
+    rl = r.html.find('h2.tileHeadline')
     for link in rl:
         links.extend(link.find('a'))
     links = u.link_return(links)
     for j,link in enumerate(links):
         print(link)
-        print("Link " +str(j)+" of page " +str(i))
-        if vl.repeated_links(link):
+        print("Link " +str(j)+" of page " +str(k))
+        if vl.repeated_links("https://defesa.gov.br"+link):
             print("Link already scraped")
             continue
-        vl.add_link(link)
-        article = nw.Article(link)
+        vl.add_link("https://trabalho.gov.br"+link)
+        article = nw.Article("http://defesa.gov.br"+link)
         article.download()
         article.parse()
         #while True:
@@ -52,7 +52,7 @@ while i<=203:
         #        continue
         #    break
         with open(sys.argv[1],'a') as f:
-            text = re.sub("\\n\\n","\\n",article.text)
-            f.write(text+"\n")
+            f.write(article.text)
     links.clear()
-    i = i+1
+    i = i+10
+    k = k +1
