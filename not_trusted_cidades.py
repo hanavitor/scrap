@@ -12,9 +12,9 @@ links = []
 i = 0
 k = 1
 
-while i<=3500:
-    print("Page "+str(k)+" out of 351")
-    r = session.get('https://www.defesa.gov.br/noticias?start='+str(i))
+while i<=3210:
+    print("Page "+str(k)+" out of 322")
+    r = session.get('https://www.cidades.gov.br/ultimas-noticias?start='+str(i))
     print(r.url)
     rl = r.html.find('h2.tileHeadline')
     for link in rl:
@@ -24,17 +24,17 @@ while i<=3500:
         try:
             print(link)
             print("Link " +str(j)+" of page " +str(k))
-            if vl.repeated_links("https://www.defesa.gov.br"+link):
+            if vl.repeated_links("https://www.cidades.gov.br"+link):
                 print("Link already scraped")
                 continue
-            article = nw.Article("https://www.defesa.gov.br"+link)
+            article = nw.Article("https://www.cidades.gov.br"+link)
             article.download()
             article.parse()
-            vl.add_link("https://www.defesa.gov.br"+link)
+            vl.add_link("https://www.cidades.gov.br"+link)
         except nw.article.ArticleException:
             print("Download failed, see failed.out")
             with open("failed.out", 'a') as f:
-                f.write("https://www.defesa.gov.br"+link)
+                f.write("https://www.cidades.gov.br"+link+"\n")
                 continue
             break
         with open(sys.argv[1],'a') as f:
@@ -42,4 +42,4 @@ while i<=3500:
             f.write(text+"\n")
     links.clear()
     i = i+10
-    k = k +1
+    k = k+1

@@ -14,8 +14,6 @@ retry = 0
 i = 0
 k = 1
 
-open(sys.argv[1],'w')
-
 while i<=5040:
     print("Page "+str(k)+" out of 505")
     r = session.get('http://trabalho.gov.br/noticias?start='+str(i))
@@ -30,10 +28,15 @@ while i<=5040:
         if vl.repeated_links("http://trabalho.gov.br"+link):
             print("Link already scraped")
             continue
-        vl.add_link("http://trabalho.gov.br"+link)
         article = nw.Article("http://trabalho.gov.br"+link)
         article.download()
+        if isinstance(article,type(nw.article.ArticleException)):
+            print("Download failed, see failed.out")
+            with open("failed.out", 'a') as f:
+                f.write("http://trabalho.gov.br"+link)
+                continue
         article.parse()
+        vl.add_link("http://trabalho.gov.br"+link)
         #while True:
         #    print(j)
         #    print(link)
