@@ -6,8 +6,6 @@ http://ctav.gov.br/category/noticias/page/203/
 
 http://trabalho.gov.br/noticias?start=1
 
-links de noticia sem dominio sao do ministerio do trabalho
-
 **Ministerio da educacao**
 
 http://portal.mec.gov.br/todas-as-noticias?view=noticias&start=1
